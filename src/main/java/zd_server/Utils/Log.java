@@ -5,6 +5,6 @@ package zd_server.Utils;
  */
 public class Log {
     public static void e(String s){
-        System.out.printf(s);
+        System.out.println(s);
     }
 }

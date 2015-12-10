@@ -8,13 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigInteger;
 
 /**
  * Created by vova on 10.12.15.
  */
 public class Servlet extends HttpServlet {
 
-    RequestController requestController = new RequestController();
+    ServerHellman requestController = new ServerHellman();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -27,11 +28,14 @@ public class Servlet extends HttpServlet {
         String par = req.getParameter("request");
         String response = "";
         if (par.equals("qp")){
-            response = requestController.getP() + ","+requestController.getQ();
+            response = requestController.getP() + ","+requestController.getA();
+            requestController.generateX();
         } else if (par.equals("x")){
             response = ""+requestController.getX();
         } else {
-            requestController.setX(Integer.valueOf(par));
+            requestController.setY(new BigInteger(par));
+            requestController.computeK();
+            Log.e("Server K "+requestController.getStringK());
             response = "ok";
         }
 
